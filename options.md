@@ -60,11 +60,30 @@ Homebrew casks to install
 
 **Default:** `[]`
 
-## [`homebrew.formulae`](module.nix#L51)
+## [`homebrew.formulae`](module.nix#L56)
 
 Homebrew formulae / packages to install
 
-**Type:** `lib.types.listOf lib.types.str`
+**Type:**
+
+```nix
+lib.types.listOf (lib.types.oneOf [
+  lib.types.str
+  (lib.types.submodule {
+    options = {
+      name = lib.mkOption {
+        type = lib.types.str;
+        description = "Name of the formula";
+      };
+      args = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [];
+        description = "Arguments to pass to the formula";
+      };
+    };
+  })
+])
+```
 
 **Default:** `[]`
 
